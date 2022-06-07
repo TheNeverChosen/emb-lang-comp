@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+WORKDIR=$PWD
+PI_DIGITS=10000
+OUTPUT_FILENAME=benchmarking.txt
+OUTPUT_FILEPATH=${WORKDIR}/${OUTPUT_FILENAME}
+
+#Warm-up
+cd $WORKDIR/c && gcc pi.c -lgmp -o pi-c #C
+cd $WORKDIR/c++ && g++ pi.cpp -lgmp -o pi-cplus #C++
+cd $WORKDIR/rust && cargo build #Rust
+cd $WORKDIR/go && go build -o pi-go #Go
+cd $WORKDIR/java && javac Pi.java #Java
+
+#Benchmarking
+cd $WORKDIR
+printf "========C========" > $OUTPUT_FILEPATH
+{ time ./c/pi-c $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "=======C++=======" >> $OUTPUT_FILEPATH
+{ time ./c++/pi-cplus $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "======Rust=======" >> $OUTPUT_FILEPATH
+{ time ./rust/target/debug/pi $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "=======Go========" >> $OUTPUT_FILEPATH
+{ time ./go/pi-go $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "======Julia======" >> $OUTPUT_FILEPATH
+{ time julia ./julia/pi.jl $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "=====Python3=====" >> $OUTPUT_FILEPATH
+{ time python3 ./python/pi.py $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================\n\n" >> $OUTPUT_FILEPATH
+
+printf "======Java=======" >> $OUTPUT_FILEPATH
+cd java
+{ time java Pi $PI_DIGITS > /dev/null ; } 2>>$OUTPUT_FILEPATH
+printf "=================" >> $OUTPUT_FILEPATH
+
+echo "All done. Results saved in ${OUTPUT_FILEPATH}"
