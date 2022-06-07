@@ -2,9 +2,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: >-
-  Análise comparativa de linguagens de programação
-  para sistemas embarcados
+title: Análise comparativa de linguagens de programação
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -14,8 +12,9 @@ authors:
     family-names: Ventilari
     email: fernando.neder@icomp.ufam.edu.br
     affiliation: UFAM
-  - name-particle: de
+  - given-names: Jônatas
+    name-particle: de
     family-names: Azevedo
-    given-names: Jônatas
     email: jonatas.azevedo@icomp.ufam.edu.br
     affiliation: UFAM
+repository-code: 'https://github.com/TheNeverChosen/emb-lang-comp'
